@@ -1,0 +1,92 @@
+﻿<Window x:Class="RunningHorses.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RunningHorses"
+        mc:Ignorable="d"
+        Title="Сумасшедшие скачки" Height="450" Width="800" MaxHeight="450" MinHeight="450" MaxWidth="800" MinWidth="800">
+    <Window.Resources>
+        <Style x:Key="FocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>
+        <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+        <Style x:Key="ButtonStyle1" TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+            <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="startButton" Click="startButton_Click" Grid.Row="0" Grid.Column="0" Content="Старт" />
+        <Button x:Name="pauseButton" Click="pauseButton_Click" Grid.Row="0" Grid.Column="1" Content="Пауза"/>
+        <Button x:Name="restartButton" Click="restartButton_Click" Grid.Row="0" Grid.Column="2" Content="Сброс" />
+        <TextBlock x:Name="InfoTextBlock" Grid.Row="0" Grid.Column="3" Text="" Background="#FFDDDDDD"/>
+        <Canvas Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="4">
+            <Canvas.Background>
+                <ImageBrush ImageSource="Assets/field_background.jpg"></ImageBrush>
+            </Canvas.Background>
+            <Button x:Name="horseOne" PreviewMouseDown="horseOne_Click" Canvas.Left="30" Canvas.Top="210" Width="60" Height="50" BorderThickness="0" Style="{DynamicResource ButtonStyle1}">
+                <Button.Background>
+                    <ImageBrush x:Name="imageFirstHorse" ImageSource ="/RunningHorses;component/Assets/horse_run0.png"></ImageBrush>
+                </Button.Background>
+            </Button>
+            <Button x:Name="horseTwo" PreviewMouseDown="horseTwo_Click" Canvas.Left="30" Canvas.Bottom ="50" Width="60" Height="50" BorderThickness="0" Style="{DynamicResource ButtonStyle1}">
+                <Button.Background>
+                    <ImageBrush x:Name="imageSecondHorse" ImageSource ="/RunningHorses;component/Assets/horse_run0.png"></ImageBrush>
+                </Button.Background>
+            </Button>
+            <Image x:Name="flagImage" Source="/RunningHorses;component/Assets/flag0.png" Canvas.Top="200" Canvas.Right="0"></Image>
+            <Line Canvas.Left="750" Canvas.Top="10" Y1="240" Y2="360" StrokeThickness="2" Stroke="Black"></Line>
+        </Canvas>
+    </Grid>
+</Window>
